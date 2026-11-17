@@ -1,0 +1,13 @@
+{
+  "_note": "Pre-generated puzzles for Solo / Daily Mesh. Seeded with CC0 Khronos glTF samples so the demo never waits; run `npm run pregenerate` with AHOLO_API_KEY to replace them with Lux3D-generated models (files land in assets/daily/).",
+  "puzzles": [
+    { "id": "duck", "prompt": "a rubber duck", "aliases": ["rubber ducky", "bath duck", "toy duck"], "style": "cartoon", "file": "samples/Duck.glb" },
+    { "id": "avocado", "prompt": "an avocado", "aliases": ["half an avocado", "avocado half"], "style": "photorealistic", "file": "samples/Avocado.glb" },
+    { "id": "fox", "prompt": "a fox", "aliases": ["red fox", "low poly fox"], "style": "cartoon", "file": "samples/Fox.glb" },
+    { "id": "boombox", "prompt": "a retro boombox", "aliases": ["boombox", "cassette player", "radio"], "style": "photorealistic", "file": "samples/BoomBox.glb" },
+    { "id": "lantern", "prompt": "an old street lantern", "aliases": ["lantern", "street lamp", "lamp post"], "style": "photorealistic", "file": "samples/Lantern.glb" },
+    { "id": "bottle", "prompt": "a water bottle", "aliases": ["metal water bottle", "flask", "thermos"], "style": "photorealistic", "file": "samples/WaterBottle.glb" },
+    { "id": "toycar", "prompt": "a toy car", "aliases": ["wind up toy car", "toy race car"], "style": "cartoon", "file": "samples/ToyCar.glb" },
+    { "id": "chair", "prompt": "a velvet armchair", "aliases": ["armchair", "chair", "velvet chair"], "style": "photorealistic", "file": "samples/SheenChair.glb" }
+  ]
+}
