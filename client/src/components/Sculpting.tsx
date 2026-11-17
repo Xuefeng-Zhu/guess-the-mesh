@@ -5,6 +5,7 @@ import { MeshDistortMaterial } from '@react-three/drei';
 import * as THREE from 'three';
 import type { PublicJob } from '../../../server/src/shared';
 import { STYLE_META } from '../lib/fx';
+import { LOWFX, Ticker } from './MeshReveal';
 
 const QUIPS = [
   'Teaching polygons to sit still…',
@@ -25,7 +26,7 @@ function Blob() {
     g.current.children.forEach((c, i) => {
       if (i === 0) return;
       const t = st.clock.elapsedTime * 0.8 + i * 1.3;
-      c.position.set(Math.cos(t) * 1.7, Math.sin(t * 1.7) * 0.6, Math.sin(t) * 1.7);
+      c.position.set(Math.cos(t) * 1.35, Math.sin(t * 1.7) * 0.55, Math.sin(t) * 1.35);
       c.rotation.x += dt * 2;
       c.rotation.z += dt * 1.4;
     });
@@ -72,7 +73,8 @@ export default function Sculpting({ job, prompterName, now }: { job: PublicJob |
   return (
     <div className="sculpting">
       <div className="sculpt-canvas">
-        <Canvas camera={{ position: [0, 0.4, 4.6], fov: 40 }}>
+        <Canvas camera={{ position: [0, 0.4, 5.2], fov: 40 }} dpr={LOWFX ? 1 : [1, 2]} frameloop={LOWFX ? 'demand' : 'always'}>
+          {LOWFX && <Ticker />}
           <ambientLight intensity={0.5} />
           <directionalLight position={[3, 4, 3]} intensity={1.6} />
           <directionalLight position={[-3, -1, -2]} intensity={0.6} color="#00D1FF" />

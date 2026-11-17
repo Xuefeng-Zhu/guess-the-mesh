@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import MeshReveal, { stageAt } from '../components/MeshReveal';
 import Sculpting from '../components/Sculpting';
+import WordHint from '../components/WordHint';
 import { call, useRoomState, useTick } from '../lib/socket';
 import { blip, burst, STYLE_META } from '../lib/fx';
 import type { PublicPlayer, RoomState } from '../../../server/src/shared';
@@ -225,7 +226,7 @@ export default function Host() {
             <div className="reveal-bar">
               <div style={{ width: `${Math.min(100, progress * 100)}%` }} />
             </div>
-            {st.phase === 'revealing' && st.wordHint && <div className="word-hint">{st.wordHint}</div>}
+            {st.phase === 'revealing' && st.wordHint && <WordHint hint={st.wordHint} />}
             {st.phase === 'roundEnd' && st.lastRound && (
               <div className="answer-card pop-in">
                 <div className="kicker">{prompter?.name}'s prompt was</div>

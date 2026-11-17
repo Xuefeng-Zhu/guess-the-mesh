@@ -2,6 +2,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import MeshReveal, { stageAt } from '../components/MeshReveal';
+import WordHint from '../components/WordHint';
 import { blip, burst, STYLE_META } from '../lib/fx';
 import { useTick } from '../lib/socket';
 import type { DailyPuzzle } from '../../../server/src/shared';
@@ -124,7 +125,7 @@ export default function Solo() {
             <div className="reveal-bar">
               <div style={{ width: `${Math.min(100, getProgress() * 100)}%` }} />
             </div>
-            <div className="word-hint">{pz.wordHint}</div>
+            {!done && <WordHint hint={pz.wordHint} />}
             {done && (
               <div className="answer-card pop-in">
                 <div className="kicker">{done.solved ? `Solved! +${done.points}` : 'It was'}</div>

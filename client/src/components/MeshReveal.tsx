@@ -122,7 +122,6 @@ function build(scene: THREE.Object3D): Built {
     const m = o as THREE.Mesh;
     if (!m.isMesh) return;
     m.frustumCulled = false;
-    m.castShadow = true;
     const mats = (Array.isArray(m.material) ? m.material : [m.material]).map((mat) => {
       const c = mat.clone();
       c.clippingPlanes = [colorPlane];
@@ -162,6 +161,7 @@ function Model({ url, getProgress, spin }: { url: string; getProgress: () => num
   const voxels = useRef<THREE.InstancedMesh>(null!);
   const ring = useRef<THREE.Mesh>(null!);
   const level = useRef(-1);
+  const voxelClip = useMemo(() => new THREE.Plane(new THREE.Vector3(0, 1, 0), 10), []);
   const pop = useRef(1);
   const maxCount = Math.max(1, ...built.levels.map((l) => l.length / 3));
 
@@ -216,14 +216,15 @@ function Model({ url, getProgress, spin }: { url: string; getProgress: () => num
       setLevel(li);
     }
     pop.current = Math.min(1, pop.current + dt * 4);
-    const fadeOut = 1 - seg(p, CLAY_START, CLAY_END - 0.05);
-    const bounce = 1 + (pop.current < 1 ? 0.1 * Math.sin(pop.current * Math.PI) : 0);
-    voxels.current.visible = fadeOut > 0.01;
-    voxels.current.scale.setScalar(Math.max(0.001, bounce * (0.25 + 0.75 * fadeOut)));
+    const bounce = 1 + (pop.current < 1 ? 0.08 * Math.sin(pop.current * Math.PI) : 0);
+    voxels.current.scale.setScalar(bounce);
 
     // clay sweeps up, then colour sweeps up over the clay
     const hClay = y0 + (y1 - y0) * seg(p, CLAY_START, CLAY_END);
     const hColor = y0 + (y1 - y0) * seg(p, COLOR_START, COLOR_END);
+    // clay eats the voxels from the bottom up
+    voxelClip.constant = p > CLAY_START ? -hClay : 10;
+    voxels.current.visible = p < CLAY_END;
     built.clayTop.constant = hClay;
     built.clayBottom.constant = -hColor;
     built.colorPlane.constant = hColor;
@@ -239,9 +240,9 @@ function Model({ url, getProgress, spin }: { url: string; getProgress: () => num
 
   return (
     <group ref={group}>
-      <instancedMesh ref={voxels} args={[undefined, undefined, maxCount]} castShadow frustumCulled={false}>
+      <instancedMesh ref={voxels} args={[undefined, undefined, maxCount]} frustumCulled={false}>
         <boxGeometry args={[1, 1, 1]} />
-        <meshStandardMaterial roughness={0.45} metalness={0.05} />
+        <meshStandardMaterial roughness={0.45} metalness={0.05} clippingPlanes={[voxelClip]} />
         <instancedBufferAttribute attach="instanceColor" args={[colors, 3]} />
       </instancedMesh>
       <primitive object={built.clay} />
@@ -252,6 +253,18 @@ function Model({ url, getProgress, spin }: { url: string; getProgress: () => num
       </mesh>
     </group>
   );
+}
+
+/** `?lowfx` (used by the headless screenshot script and slow TVs): ~5 fps, no contact shadows. */
+export const LOWFX = typeof location !== 'undefined' && new URLSearchParams(location.search).has('lowfx');
+
+export function Ticker({ fps = 5 }: { fps?: number }) {
+  const { invalidate } = useThree();
+  useEffect(() => {
+    const id = setInterval(() => invalidate(), 1000 / fps);
+    return () => clearInterval(id);
+  }, [invalidate, fps]);
+  return null;
 }
 
 function Loading() {
@@ -284,8 +297,8 @@ export default function MeshReveal({
   return (
     <div className={className ?? 'reveal-canvas'}>
       <Canvas
-        shadows
-        dpr={[1, 2]}
+        dpr={LOWFX ? 1 : [1, 2]}
+        frameloop={LOWFX ? 'demand' : 'always'}
         camera={{ position: [0, 0.9, 4.4], fov: 38 }}
         gl={{ antialias: true, preserveDrawingBuffer: true }}
         onCreated={({ gl }) => {
@@ -295,12 +308,13 @@ export default function MeshReveal({
       >
         <Env />
         <hemisphereLight args={['#ffffff', '#3b2a6b', 0.7]} />
-        <directionalLight position={[3, 5, 4]} intensity={1.6} castShadow shadow-mapSize={[1024, 1024]} />
+        {LOWFX && <Ticker />}
+        <directionalLight position={[3, 5, 4]} intensity={1.6} />
         <directionalLight position={[-4, 2, -3]} intensity={0.6} color="#9fd8ff" />
         <Suspense fallback={<Loading />}>
           <Model key={url} url={url} getProgress={getProgress} spin={spin} />
         </Suspense>
-        <ContactShadows position={[0, -1.15, 0]} opacity={0.45} scale={6} blur={2.4} far={3} />
+        {!LOWFX && <ContactShadows position={[0, -1.15, 0]} opacity={0.45} scale={6} blur={2.4} far={3} resolution={256} />}
         {orbit && <OrbitControls enablePan={false} minDistance={2.5} maxDistance={8} />}
       </Canvas>
     </div>

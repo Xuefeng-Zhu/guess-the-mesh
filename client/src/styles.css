@@ -149,6 +149,7 @@ textarea { resize: none; }
 .sculpting { display: grid; grid-template-columns: minmax(280px, 460px) minmax(300px, 620px); gap: 36px; align-items: center; text-align: left; }
 .sculpt-canvas { height: 420px; }
 .sculpt-copy { display: flex; flex-direction: column; gap: 16px; }
+.sculpt-copy .chip { align-self: flex-start; }
 .sculpt-copy h2 { font-size: clamp(30px, 4vw, 54px); }
 .progress { height: 22px; background: #0006; border: 3px solid var(--line); border-radius: 999px; overflow: hidden; }
 .progress .bar { height: 100%; background: repeating-linear-gradient(-45deg, var(--yellow) 0 14px, #ffd451 14px 28px); background-size: 40px 40px; animation: stripes 0.8s linear infinite; transition: width 0.4s ease; }
@@ -166,8 +167,12 @@ textarea { resize: none; }
 .timer-text { margin-left: auto; font-family: var(--mono); font-size: 26px; background: #0008; padding: 6px 12px; border-radius: 12px; }
 .reveal-bar { position: absolute; left: 0; right: 0; bottom: 0; height: 8px; background: #0005; }
 .reveal-bar div { height: 100%; background: linear-gradient(90deg, var(--pink), var(--yellow), var(--cyan)); transition: width 0.25s linear; }
-.word-hint { position: absolute; bottom: 26px; left: 0; right: 0; text-align: center; font-family: var(--mono); font-size: clamp(22px, 2.6vw, 34px); letter-spacing: 0.08em; white-space: pre; color: var(--ink); text-shadow: 0 2px 0 var(--line); }
-.word-hint.small { position: static; font-size: 18px; margin-bottom: 10px; white-space: pre-wrap; }
+.word-hint { position: absolute; bottom: 28px; left: 24px; right: 24px; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 22px; pointer-events: none; }
+.hint-word { display: inline-flex; gap: 4px; }
+.hint-l { width: 22px; height: 30px; border-radius: 6px; background: #fff8ef; border: 2px solid var(--line); box-shadow: 2px 2px 0 var(--line); }
+.hint-p { font-family: var(--mono); font-size: 22px; color: var(--ink); align-self: flex-end; }
+.word-hint.small { position: static; justify-content: flex-start; gap: 6px 14px; margin-bottom: 4px; }
+.word-hint.small .hint-l { width: 14px; height: 20px; border-radius: 4px; }
 .answer-card { position: absolute; left: 50%; bottom: 26px; transform: translateX(-50%); background: var(--ink); color: var(--line); border: 3px solid var(--line); box-shadow: 6px 6px 0 var(--line); border-radius: 20px; padding: 18px 26px; text-align: center; max-width: 86%; display: flex; flex-direction: column; gap: 8px; align-items: center; }
 .answer-card .kicker { color: var(--pink); }
 .answer-card .answer { font-size: clamp(26px, 3.4vw, 46px); font-weight: 900; letter-spacing: -0.02em; }

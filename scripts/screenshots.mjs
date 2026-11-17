@@ -1,5 +1,6 @@
 // Headless screenshots of a real game: host screen (laptop) + one phone (browser) + two socket bots.
 // Usage: start the server (mock mode, e.g. REVEAL_MS=30000 ROUND_MS=40000), then
+//   (use REVEAL_MS=60000 ROUND_MS=75000 so each stage is wide enough for slow software-GL captures)
 //   SHOT_URL=http://localhost:3000 node scripts/screenshots.mjs
 import { chromium, devices } from 'playwright';
 import { io } from 'socket.io-client';
@@ -20,20 +21,34 @@ const PROMPTS = {
 
 const browser = await chromium.launch({ args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'] });
 const shot = async (page, name) => {
-  await page.screenshot({ path: `${OUT}${name}.png` });
-  log('📸', name);
+  const t = Date.now();
+  try {
+    await page.screenshot({ path: `${OUT}${name}.png`, timeout: 20000 });
+    log('📸', name, `${Date.now() - t}ms`);
+  } catch (e) {
+    log('screenshot failed', name, e.message.split('\n')[0]);
+  }
+};
+const act = async (label, fn) => {
+  try {
+    await fn();
+    log('·', label);
+  } catch (e) {
+    log('action failed', label, e.message.split('\n')[0]);
+  }
 };
 
 // Home
 const hostCtx = await browser.newContext({ viewport: { width: 1440, height: 900 }, deviceScaleFactor: 1 });
 const host = await hostCtx.newPage();
+host.setDefaultTimeout(10000);
 host.on('pageerror', (e) => log('host pageerror', e.message));
 await host.goto(`${URL}/`);
 await sleep(1500);
 await shot(host, '01-home');
 
 // Host lobby
-await host.goto(`${URL}/host`);
+await host.goto(`${URL}/host?lowfx`);
 await host.waitForSelector('.code span');
 const code = (await host.locator('.code').innerText()).replace(/\s/g, '');
 log('room', code);
@@ -41,6 +56,7 @@ log('room', code);
 // Phone
 const phoneCtx = await browser.newContext({ ...devices['iPhone 13'] });
 const phone = await phoneCtx.newPage();
+phone.setDefaultTimeout(10000);
 phone.on('pageerror', (e) => log('phone pageerror', e.message));
 await phone.goto(`${URL}/play?code=${code}`);
 await phone.fill('input:not(.code-input)', 'Dana');
@@ -89,13 +105,12 @@ while (Date.now() < deadline) {
   }
 
   // phone prompts via the real UI
-  if (st.phase === 'prompting' && (await phone.locator('.composer').count()) > 0 && !captured.has('composer')) {
-    await phone.fill('textarea', PROMPTS.Dana.prompt);
-    await phone.click('text=Fantasy');
+  if (!captured.has('composer') && (await phone.locator('.composer').count()) > 0) {
+    captured.add('composer');
+    await act('phone types prompt', async () => { await phone.fill('textarea', PROMPTS.Dana.prompt); await phone.click('text=Fantasy'); });
     await sleep(300);
     await shot(phone, '05-phone-prompt-composer');
-    captured.add('composer');
-    await phone.click('text=Sculpt it ✨');
+    await act('phone submits prompt', () => phone.click('text=Sculpt it ✨'));
   }
 
   if (st.phase === 'generating' && !captured.has('sculpt')) {
@@ -113,26 +128,24 @@ while (Date.now() < deadline) {
     const t = Date.now() - revealSeenAt;
     const full = !captured.has('reveal-done');
     if (full) {
-      if (t > 3500 && !captured.has('v')) { await shot(host, '07-host-reveal-voxels'); captured.add('v'); }
-      if (t > 13500 && !captured.has('c')) { await shot(host, '08-host-reveal-clay'); captured.add('c'); }
-      if (t > 22500 && !captured.has('p')) { await shot(host, '09-host-reveal-painting'); captured.add('p'); captured.add('reveal-done'); }
+      if (t > 4000 && !captured.has('v')) { await shot(host, '07-host-reveal-voxels'); captured.add('v'); }
+      if (t > 24000 && !captured.has('c')) { await shot(host, '08-host-reveal-clay'); captured.add('c'); }
+      if (t > 42000 && !captured.has('p')) { await shot(host, '09-host-reveal-painting'); captured.add('p'); captured.add('reveal-done'); }
     }
     const phoneIsPrompter = st.players.find((p) => p.id === st.prompterId)?.name === 'Dana';
     if (!phoneIsPrompter && !captured.has('phone-guess')) {
-      if (phoneGuessStep === 0 && t > 6000) {
-        await phone.fill('.guess-form input', 'a haunted teapot');
-        await phone.click('.guess-form button');
+      if (phoneGuessStep === 0 && t > 7000) {
         phoneGuessStep = 1;
-      } else if (phoneGuessStep === 1 && t > 9000) {
-        await phone.fill('.guess-form input', 'a lantern');
-        await phone.click('.guess-form button');
+        await act('phone guess 1', async () => { await phone.fill('.guess-form input', 'a haunted teapot'); await phone.press('.guess-form input', 'Enter'); });
+      } else if (phoneGuessStep === 1 && t > 9500) {
         phoneGuessStep = 2;
-      } else if (phoneGuessStep === 2 && t > 10500) {
+        await act('phone guess 2', async () => { await phone.fill('.guess-form input', 'a speaker with legs'); await phone.press('.guess-form input', 'Enter'); });
+      } else if (phoneGuessStep === 2 && t > 11000) {
         await shot(phone, '10-phone-guessing');
         captured.add('phone-guess');
       }
     }
-    const guessAt = full ? 24000 : 2500;
+    const guessAt = full ? 50000 : 2500;
     for (const b of bots) {
       if (b.guessedRound !== st.round && st.prompterId !== b.id && t > guessAt) {
         b.guessedRound = st.round;
@@ -141,8 +154,7 @@ while (Date.now() < deadline) {
     }
     if (!phoneIsPrompter && phoneGuessStep >= 2 && phoneGuessStep < 3 && t > guessAt + 1500) {
       phoneGuessStep = 3;
-      await phone.fill('.guess-form input', promptOf(st)).catch(() => {});
-      await phone.click('.guess-form button').catch(() => {});
+      await act('phone guess right', async () => { await phone.fill('.guess-form input', promptOf(st), { timeout: 3000 }); await phone.press('.guess-form input', 'Enter', { timeout: 3000 }); });
     }
   }
 
@@ -157,12 +169,12 @@ await sleep(1500);
 await shot(host, '13-host-game-over');
 
 const g = await hostCtx.newPage();
-await g.goto(`${URL}/gallery`);
+await g.goto(`${URL}/gallery?lowfx`);
 await sleep(5000);
 await shot(g, '14-gallery');
 
 const solo = await hostCtx.newPage();
-await solo.goto(`${URL}/solo`);
+await solo.goto(`${URL}/solo?lowfx`);
 await sleep(9000);
 await solo.fill('.guess-form input', 'a speaker');
 await solo.click('.guess-form button');

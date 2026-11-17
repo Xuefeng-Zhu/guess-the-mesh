@@ -1,6 +1,10 @@
 import confetti from 'canvas-confetti';
 
 export function burst(colors = ['#FF4D6D', '#FFBE0B', '#00D1FF', '#06D6A0', '#B388FF']) {
+  if (new URLSearchParams(location.search).has('lowfx')) {
+    confetti({ particleCount: 160, spread: 100, startVelocity: 40, origin: { y: 0.6 }, colors, ticks: 400 });
+    return;
+  }
   const end = Date.now() + 700;
   confetti({ particleCount: 140, spread: 90, startVelocity: 45, origin: { y: 0.65 }, colors });
   (function frame() {

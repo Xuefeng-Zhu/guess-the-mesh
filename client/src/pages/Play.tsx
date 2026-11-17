@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { call, getSocket, useRoomState } from '../lib/socket';
+import WordHint from '../components/WordHint';
 import { STYLE_META } from '../lib/fx';
 import { STYLES, type Style } from '../../../server/src/shared';
 
@@ -185,7 +186,7 @@ export default function Play() {
 
       {st.phase === 'revealing' && !me.isPrompter && (
         <div className="guess-panel">
-          {st.wordHint && <div className="word-hint small">{st.wordHint}</div>}
+          {st.wordHint && <WordHint hint={st.wordHint} className="small" />}
           {myCorrect ? (
             <div className="phone-msg">
               <div className="big-emoji">✅</div>
