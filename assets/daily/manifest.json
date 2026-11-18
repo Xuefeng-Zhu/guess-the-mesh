@@ -1,13 +1,222 @@
 {
   "_note": "Pre-generated puzzles for Solo / Daily Mesh. Seeded with CC0 Khronos glTF samples so the demo never waits; run `npm run pregenerate` with AHOLO_API_KEY to replace them with Lux3D-generated models (files land in assets/daily/).",
   "puzzles": [
-    { "id": "duck", "prompt": "a rubber duck", "aliases": ["rubber ducky", "bath duck", "toy duck"], "style": "cartoon", "file": "samples/Duck.glb" },
-    { "id": "avocado", "prompt": "an avocado", "aliases": ["half an avocado", "avocado half"], "style": "photorealistic", "file": "samples/Avocado.glb" },
-    { "id": "fox", "prompt": "a fox", "aliases": ["red fox", "low poly fox"], "style": "cartoon", "file": "samples/Fox.glb" },
-    { "id": "boombox", "prompt": "a retro boombox", "aliases": ["boombox", "cassette player", "radio"], "style": "photorealistic", "file": "samples/BoomBox.glb" },
-    { "id": "lantern", "prompt": "an old street lantern", "aliases": ["lantern", "street lamp", "lamp post"], "style": "photorealistic", "file": "samples/Lantern.glb" },
-    { "id": "bottle", "prompt": "a water bottle", "aliases": ["metal water bottle", "flask", "thermos"], "style": "photorealistic", "file": "samples/WaterBottle.glb" },
-    { "id": "toycar", "prompt": "a toy car", "aliases": ["wind up toy car", "toy race car"], "style": "cartoon", "file": "samples/ToyCar.glb" },
-    { "id": "chair", "prompt": "a velvet armchair", "aliases": ["armchair", "chair", "velvet chair"], "style": "photorealistic", "file": "samples/SheenChair.glb" }
+    {
+      "id": "corgi-crown",
+      "prompt": "a sleepy corgi wearing a crown",
+      "aliases": [
+        "corgi with a crown",
+        "king corgi",
+        "dog wearing a crown"
+      ],
+      "style": "cartoon",
+      "file": "daily/corgi-crown.glb",
+      "lux3dGenerated": true
+    },
+    {
+      "id": "cactus-guitar",
+      "prompt": "a cactus playing the guitar",
+      "aliases": [
+        "cactus with a guitar",
+        "guitar cactus"
+      ],
+      "style": "cartoon",
+      "file": "daily/cactus-guitar.glb",
+      "lux3dGenerated": true
+    },
+    {
+      "id": "teacup-dragon",
+      "prompt": "a tiny dragon in a teacup",
+      "aliases": [
+        "dragon in a cup",
+        "teacup dragon"
+      ],
+      "style": "fantasy",
+      "file": "daily/teacup-dragon.glb",
+      "lux3dGenerated": true
+    },
+    {
+      "id": "penguin-skate",
+      "prompt": "a penguin on a skateboard",
+      "aliases": [
+        "skateboarding penguin",
+        "penguin skateboard"
+      ],
+      "style": "cartoon",
+      "file": "daily/penguin-skate.glb",
+      "lux3dGenerated": true
+    },
+    {
+      "id": "mushroom-house",
+      "prompt": "a mushroom house with a chimney",
+      "aliases": [
+        "mushroom house",
+        "mushroom cottage"
+      ],
+      "style": "hand_painted",
+      "file": "daily/mushroom-house.glb",
+      "lux3dGenerated": true
+    },
+    {
+      "id": "robot-flower",
+      "prompt": "a robot watering a flower",
+      "aliases": [
+        "robot with a flower",
+        "gardening robot"
+      ],
+      "style": "cyberpunk",
+      "file": "daily/robot-flower.glb",
+      "lux3dGenerated": true
+    },
+    {
+      "id": "snail-castle",
+      "prompt": "a snail with a castle shell",
+      "aliases": [
+        "castle snail",
+        "snail castle"
+      ],
+      "style": "fantasy",
+      "file": "daily/snail-castle.glb",
+      "lux3dGenerated": true
+    },
+    {
+      "id": "glass-whale",
+      "prompt": "a glass whale",
+      "aliases": [
+        "crystal whale",
+        "whale"
+      ],
+      "style": "glass",
+      "file": "daily/glass-whale.glb",
+      "lux3dGenerated": true
+    },
+    {
+      "id": "frog-knight",
+      "prompt": "a frog knight with a sword",
+      "aliases": [
+        "frog with a sword",
+        "knight frog"
+      ],
+      "style": "anime",
+      "file": "daily/frog-knight.glb",
+      "lux3dGenerated": true
+    },
+    {
+      "id": "burger-wings",
+      "prompt": "a cheeseburger with wings",
+      "aliases": [
+        "flying burger",
+        "burger with wings"
+      ],
+      "style": "cartoon",
+      "file": "daily/burger-wings.glb",
+      "lux3dGenerated": true
+    },
+    {
+      "id": "toaster-rocket",
+      "prompt": "a toaster rocket ship",
+      "aliases": [
+        "rocket toaster",
+        "toaster spaceship"
+      ],
+      "style": "cyberpunk",
+      "file": "daily/toaster-rocket.glb",
+      "lux3dGenerated": true
+    },
+    {
+      "id": "lighthouse-candy",
+      "prompt": "a lighthouse made of candy",
+      "aliases": [
+        "candy lighthouse"
+      ],
+      "style": "hand_painted",
+      "file": "daily/lighthouse-candy.glb",
+      "lux3dGenerated": true
+    },
+    {
+      "id": "duck",
+      "prompt": "a rubber duck",
+      "aliases": [
+        "rubber ducky",
+        "bath duck",
+        "toy duck"
+      ],
+      "style": "cartoon",
+      "file": "samples/Duck.glb"
+    },
+    {
+      "id": "avocado",
+      "prompt": "an avocado",
+      "aliases": [
+        "half an avocado",
+        "avocado half"
+      ],
+      "style": "photorealistic",
+      "file": "samples/Avocado.glb"
+    },
+    {
+      "id": "fox",
+      "prompt": "a fox",
+      "aliases": [
+        "red fox",
+        "low poly fox"
+      ],
+      "style": "cartoon",
+      "file": "samples/Fox.glb"
+    },
+    {
+      "id": "boombox",
+      "prompt": "a retro boombox",
+      "aliases": [
+        "boombox",
+        "cassette player",
+        "radio"
+      ],
+      "style": "photorealistic",
+      "file": "samples/BoomBox.glb"
+    },
+    {
+      "id": "lantern",
+      "prompt": "an old street lantern",
+      "aliases": [
+        "lantern",
+        "street lamp",
+        "lamp post"
+      ],
+      "style": "photorealistic",
+      "file": "samples/Lantern.glb"
+    },
+    {
+      "id": "bottle",
+      "prompt": "a water bottle",
+      "aliases": [
+        "metal water bottle",
+        "flask",
+        "thermos"
+      ],
+      "style": "photorealistic",
+      "file": "samples/WaterBottle.glb"
+    },
+    {
+      "id": "toycar",
+      "prompt": "a toy car",
+      "aliases": [
+        "wind up toy car",
+        "toy race car"
+      ],
+      "style": "cartoon",
+      "file": "samples/ToyCar.glb"
+    },
+    {
+      "id": "chair",
+      "prompt": "a velvet armchair",
+      "aliases": [
+        "armchair",
+        "chair",
+        "velvet chair"
+      ],
+      "style": "photorealistic",
+      "file": "samples/SheenChair.glb"
+    }
   ]
 }
