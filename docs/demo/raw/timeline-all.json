@@ -1,0 +1,211 @@
+{
+  "events": [
+    {
+      "name": "lobby",
+      "t": 1794954973328,
+      "code": "WMUP"
+    },
+    {
+      "name": "phone-joined",
+      "t": 1794954976772
+    },
+    {
+      "name": "bot-joined",
+      "t": 1794954978291,
+      "bot": "Eli"
+    },
+    {
+      "name": "bot-joined",
+      "t": 1794954979797,
+      "bot": "Fay"
+    },
+    {
+      "name": "start",
+      "t": 1794954982855
+    },
+    {
+      "name": "compose",
+      "t": 1794954985899
+    },
+    {
+      "name": "submitted",
+      "t": 1794954990501,
+      "prompt": "a raccoon DJ with headphones",
+      "style": "cartoon"
+    },
+    {
+      "name": "phase:generating#0",
+      "t": 1794954990750,
+      "job": "queued",
+      "stage": "queued"
+    },
+    {
+      "name": "stage:0:queued",
+      "t": 1794954990751
+    },
+    {
+      "name": "stage:0:submitted",
+      "t": 1794954992251
+    },
+    {
+      "name": "stage:0:running",
+      "t": 1794954998008
+    },
+    {
+      "name": "stage:0:downloading",
+      "t": 1794955082676
+    },
+    {
+      "name": "phase:revealing#0",
+      "t": 1794955089933,
+      "job": "ready",
+      "stage": "done"
+    },
+    {
+      "name": "queued-early",
+      "t": 1794955089942,
+      "bot": "Fay",
+      "ok": true
+    },
+    {
+      "name": "guess",
+      "t": 1794955109977,
+      "bot": "Eli",
+      "text": "a cat with headphones",
+      "verdict": "close"
+    },
+    {
+      "name": "guess",
+      "t": 1794955130034,
+      "bot": "Fay",
+      "text": "a teddy bear",
+      "verdict": "miss"
+    },
+    {
+      "name": "guess",
+      "t": 1794955150086,
+      "bot": "Fay",
+      "text": "a dog with headphones",
+      "verdict": "close"
+    },
+    {
+      "name": "guess",
+      "t": 1794955190180,
+      "bot": "Fay",
+      "text": "a raccoon DJ",
+      "verdict": "correct"
+    },
+    {
+      "name": "guess",
+      "t": 1794955262092,
+      "bot": "Eli",
+      "text": "raccoon dj with headphones",
+      "verdict": "correct"
+    },
+    {
+      "name": "phase:roundEnd#0",
+      "t": 1794955264096,
+      "job": "ready",
+      "stage": "done"
+    },
+    {
+      "name": "phase:revealing#1",
+      "t": 1794955288145,
+      "job": "ready",
+      "stage": "done"
+    },
+    {
+      "name": "phone-guess",
+      "t": 1794955309119,
+      "text": "a toaster with arms"
+    },
+    {
+      "name": "phone-guess",
+      "t": 1794955322385,
+      "text": "a robot"
+    },
+    {
+      "name": "guess",
+      "t": 1794955336173,
+      "bot": "Eli",
+      "text": "robot cook",
+      "verdict": "close"
+    },
+    {
+      "name": "phone-guess",
+      "t": 1794955350931,
+      "text": "robot chef"
+    },
+    {
+      "name": "guess",
+      "t": 1794955372229,
+      "bot": "Eli",
+      "text": "a robot chef with a pan",
+      "verdict": "correct"
+    },
+    {
+      "name": "phase:roundEnd#1",
+      "t": 1794955374231,
+      "job": "ready",
+      "stage": "done"
+    },
+    {
+      "name": "phase:prompting#2",
+      "t": 1794955398284
+    },
+    {
+      "name": "end-game-footage",
+      "t": 1794955400785
+    },
+    {
+      "name": "gallery",
+      "t": 1794955404125
+    },
+    {
+      "name": "gallery-click",
+      "t": 1794955413989
+    },
+    {
+      "name": "solo",
+      "t": 1794955423615,
+      "puzzles": [
+        "a penguin on a skateboard",
+        "a mushroom house with a chimney",
+        "a robot watering a flower"
+      ]
+    },
+    {
+      "name": "solo-guess",
+      "t": 1794955431668,
+      "text": "a hat"
+    },
+    {
+      "name": "solo-guess",
+      "t": 1794955437536,
+      "text": "penguin on a skateboard"
+    },
+    {
+      "name": "solo-next",
+      "t": 1794955443696
+    },
+    {
+      "name": "solo-guess",
+      "t": 1794955456313,
+      "text": "mushroom house with a chimney"
+    }
+  ],
+  "videos": {
+    "host-game.webm": {
+      "t0": 1794954972378
+    },
+    "phone-game.webm": {
+      "t0": 1794954972732
+    },
+    "gallery.webm": {
+      "t0": 1794955403318
+    },
+    "solo.webm": {
+      "t0": 1794955423367
+    }
+  }
+}

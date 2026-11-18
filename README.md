@@ -10,6 +10,19 @@ One player secretly types a prompt on their phone ("a sleepy corgi wearing a cro
 |---|---|---|---|
 | ![](docs/screenshots/03-host-lobby.png) | ![](docs/screenshots/05-phone-prompt-composer.png) | ![](docs/screenshots/08-host-reveal-clay.png) | ![](docs/screenshots/10-phone-guessing.png) |
 
+## Demo video
+
+[`docs/demo/guess-the-mesh-demo.mp4`](docs/demo/guess-the-mesh-demo.mp4) (2:17, 1080p): real footage of a real game. The host screen and a real phone browser were recorded with Playwright while two socket bots (Eli, Fay) played along, and **both rounds were generated live by Lux3D** (G1-Turbo, cartoon style):
+
+| Round | Prompt | Lux3D task | Generation |
+|---|---|---|---|
+| 1 | "a raccoon DJ with headphones" (typed on the phone) | 8259450 | 99 s |
+| 2 | "a robot chef with a frying pan" (queued early by a bot) | 8259515 | 96 s |
+
+Edits are labelled on screen: generation is sped up 10x, and the reveal is sped up 4x. The server ran with 4x game timings (`REVEAL_MS=200000 ROUND_MS=240000 ROUND_END_MS=24000`) because headless software GL renders only a few fps, so after the 4x speed-up the reveal plays at the game's normal pace (the on-screen countdown is in those stretched seconds). Solo / Daily Mesh uses the 12 pre-generated Lux3D models in `assets/daily`.
+
+Rebuild: `scripts/record-demo.mjs` (capture, writes `docs/demo/raw/`), `scripts/demo-cards.mjs` (title, end and caption cards) and `scripts/make-demo.py` (ffmpeg edit). The host clip (`docs/demo/raw/host-game.webm`, 94 MB) is not in git.
+
 ## Modes
 
 - **Party game** (`/host` on a TV or laptop, `/play` on phones): 4-letter room code + QR, 2–10 players, every player prompts once (or twice).

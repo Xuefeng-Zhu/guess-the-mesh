@@ -3,3 +3,8 @@ dist
 data
 *.log
 .env
+# demo video intermediates (regenerate with scripts/demo-cards.mjs + scripts/make-demo.py)
+docs/demo/build/
+# raw clips over 50MB stay out of git
+docs/demo/raw/host-game.webm
+__pycache__/
