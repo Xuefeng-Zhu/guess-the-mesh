@@ -4,6 +4,8 @@
 
 One player secretly types a prompt on their phone ("a sleepy corgi wearing a crown"). **Lux3D text-to-3D** sculpts it into a real GLB model. On the big screen the model emerges in three acts — **chunky voxels → grey clay → full colour** — slowly rotating, while everyone else races to guess it from their phones. Faster correct guesses score more; the prompter scores when people get it.
 
+**Live demo:** https://guess-the-mesh.onrender.com (Render free tier, so the first load can take about a minute to wake up). Solo / Daily Mesh plays the 12 real Lux3D models; multiplayer runs in mock mode unless the host sets `AHOLO_API_KEY`.
+
 ![Host reveal](docs/screenshots/09-host-reveal-painting.png)
 
 | Lobby (TV/laptop) | Phone prompt | Clay stage | Phone guessing |
