@@ -21,6 +21,8 @@ One player secretly types a prompt on their phone ("a sleepy corgi wearing a cro
 
 Edits are labelled on screen: generation is sped up 10x, and the reveal is sped up 4x. The server ran with 4x game timings (`REVEAL_MS=200000 ROUND_MS=240000 ROUND_END_MS=24000`) because headless software GL renders only a few fps, so after the 4x speed-up the reveal plays at the game's normal pace (the on-screen countdown is in those stretched seconds). Solo / Daily Mesh uses the 12 pre-generated Lux3D models in `assets/daily`.
 
+Narration: English voiceover (Mistral Voxtral TTS, voice "Paul – Cheerful"), script in [`docs/demo/voiceover-script.md`](docs/demo/voiceover-script.md); `scripts/make-voiceover.py` generates one clip per segment into `docs/demo/vo/` and muxes them onto the video without re-encoding it. The silent cut is kept as `docs/demo/guess-the-mesh-demo-silent.mp4`.
+
 Rebuild: `scripts/record-demo.mjs` (capture, writes `docs/demo/raw/`), `scripts/demo-cards.mjs` (title, end and caption cards) and `scripts/make-demo.py` (ffmpeg edit). The host clip (`docs/demo/raw/host-game.webm`, 94 MB) is not in git.
 
 ## Modes

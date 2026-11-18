@@ -1,0 +1,72 @@
+[
+  {
+    "clip": "01-title",
+    "start": 0.35,
+    "end": 2.07,
+    "segment_end": 3.0,
+    "atempo": 1.0
+  },
+  {
+    "clip": "02-lobby",
+    "start": 3.3,
+    "end": 17.65,
+    "segment_end": 19.4,
+    "atempo": 1.0
+  },
+  {
+    "clip": "03-gen",
+    "start": 19.7,
+    "end": 28.19,
+    "segment_end": 29.36,
+    "atempo": 1.0
+  },
+  {
+    "clip": "04a-reveal",
+    "start": 29.8,
+    "end": 47.86,
+    "segment_end": 76.36,
+    "atempo": 1.0
+  },
+  {
+    "clip": "04b-correct",
+    "start": 54.2,
+    "end": 62.56,
+    "segment_end": 76.36,
+    "atempo": 1.0
+  },
+  {
+    "clip": "04c-color",
+    "start": 66.8,
+    "end": 72.92,
+    "segment_end": 76.36,
+    "atempo": 1.0
+  },
+  {
+    "clip": "05-round2",
+    "start": 76.7,
+    "end": 96.99,
+    "segment_end": 101.74,
+    "atempo": 1.0
+  },
+  {
+    "clip": "06-gallery",
+    "start": 102.0,
+    "end": 108.85,
+    "segment_end": 111.24,
+    "atempo": 1.0
+  },
+  {
+    "clip": "07-solo",
+    "start": 111.5,
+    "end": 125.35,
+    "segment_end": 132.34,
+    "atempo": 1.0
+  },
+  {
+    "clip": "08-end",
+    "start": 131.0,
+    "end": 136.43,
+    "segment_end": 136.83,
+    "atempo": 1.0
+  }
+]
