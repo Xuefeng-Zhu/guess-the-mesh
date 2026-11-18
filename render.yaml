@@ -1,0 +1,23 @@
+# Render Blueprint: https://render.com/docs/blueprint-spec
+services:
+  - type: web
+    name: guess-the-mesh
+    runtime: docker
+    plan: starter # websockets + always-on; "free" works too but sleeps when idle
+    healthCheckPath: /api/health
+    envVars:
+      - key: AHOLO_API_KEY # Lux3D key from https://labs.aholo.ai/api-keys (leave empty for mock mode)
+        sync: false
+      - key: LUX3D_VERSION
+        value: G1-Turbo
+      - key: LUX3D_FACE_COUNT
+        value: "50000"
+      - key: OPENROUTER_API_KEY # optional LLM guess judge
+        sync: false
+      - key: DATA_DIR
+        value: /data
+    # Keep the gallery across deploys (paid plans only):
+    disk:
+      name: gtm-data
+      mountPath: /data
+      sizeGB: 1

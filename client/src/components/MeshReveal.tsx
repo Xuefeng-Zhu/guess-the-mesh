@@ -166,9 +166,10 @@ function Model({ url, getProgress, spin }: { url: string; getProgress: () => num
   const maxCount = Math.max(1, ...built.levels.map((l) => l.length / 3));
 
   // Real bounding Y of the model, for the sweeps
-  const [y0, y1] = useMemo(() => {
+  const [y0, y1, ringR] = useMemo(() => {
     const b = new THREE.Box3().setFromObject(built.color);
-    return [b.min.y - 0.02, b.max.y + 0.02];
+    const r = Math.max(0.25, Math.max(b.max.x - b.min.x, b.max.z - b.min.z) * 0.6);
+    return [b.min.y - 0.02, b.max.y + 0.02, r];
   }, [built]);
 
   const colors = useMemo(() => {
@@ -177,7 +178,23 @@ function Model({ url, getProgress, spin }: { url: string; getProgress: () => num
     return c;
   }, [maxCount]);
 
-  useEffect(() => () => built.colorMats.forEach((m) => m.dispose()), [built]);
+  useEffect(
+    () => () => {
+      // Free GPU/CPU memory between rounds (a TV may run many games in a row).
+      built.colorMats.forEach((m) => m.dispose());
+      gltf.scene.traverse((o) => {
+        const m = o as THREE.Mesh;
+        if (!m.isMesh) return;
+        m.geometry?.dispose();
+        (Array.isArray(m.material) ? m.material : [m.material]).forEach((mat: any) => {
+          Object.values(mat).forEach((v: any) => v?.isTexture && v.dispose());
+          mat.dispose();
+        });
+      });
+      useGLTF.clear(url);
+    },
+    [built, gltf, url],
+  );
 
   const dummy = useMemo(() => new THREE.Object3D(), []);
   const ca = useMemo(() => new THREE.Color('#FF4D6D'), []);
@@ -248,7 +265,7 @@ function Model({ url, getProgress, spin }: { url: string; getProgress: () => num
       <primitive object={built.clay} />
       <primitive object={built.color} />
       <mesh ref={ring} rotation-x={-Math.PI / 2}>
-        <ringGeometry args={[built.radius * 0.95, built.radius * 1.02, 64]} />
+        <ringGeometry args={[ringR * 0.94, ringR, 64]} />
         <meshBasicMaterial transparent opacity={0.85} side={THREE.DoubleSide} toneMapped={false} />
       </mesh>
     </group>

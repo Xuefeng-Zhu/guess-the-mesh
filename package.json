@@ -14,7 +14,8 @@
     "typecheck": "tsc -p tsconfig.json --noEmit && tsc -p server/tsconfig.json --noEmit",
     "start": "node server/dist/index.js",
     "simulate": "tsx scripts/simulate.ts",
-    "screenshots": "node scripts/screenshots.mjs"
+    "screenshots": "node scripts/screenshots.mjs",
+    "pregenerate": "tsx scripts/pregenerate.ts"
   },
   "dependencies": {
     "@manycore/aholo-sdk-lux3d": "^1.10.0",

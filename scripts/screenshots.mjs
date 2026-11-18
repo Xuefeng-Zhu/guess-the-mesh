@@ -15,7 +15,7 @@ const call = (s, ev, p = {}) => new Promise((res) => s.emit(ev, p, res));
 
 const PROMPTS = {
   Dana: { prompt: 'a magic lantern for a ghost', style: 'fantasy' },
-  Eli: { prompt: 'a retro boombox with tiny legs', style: 'cartoon' },
+  Eli: { prompt: 'a fox wearing a tiny top hat', style: 'cartoon' },
   Fay: { prompt: 'a toy car made of cheese', style: 'hand_painted' },
 };
 
@@ -152,7 +152,7 @@ while (Date.now() < deadline) {
         call(b.s, 'player:guess', { text: 'a sandwich' }).then(() => sleep(900)).then(() => call(b.s, 'player:guess', { text: promptOf(st) }));
       }
     }
-    if (!phoneIsPrompter && phoneGuessStep >= 2 && phoneGuessStep < 3 && t > guessAt + 1500) {
+    if (!phoneIsPrompter && captured.has('phone-guess') && phoneGuessStep >= 2 && phoneGuessStep < 3 && t > guessAt + 1500) {
       phoneGuessStep = 3;
       await act('phone guess right', async () => { await phone.fill('.guess-form input', promptOf(st), { timeout: 3000 }); await phone.press('.guess-form input', 'Enter', { timeout: 3000 }); });
     }

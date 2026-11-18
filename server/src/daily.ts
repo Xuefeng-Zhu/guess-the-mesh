@@ -12,6 +12,7 @@ export interface Puzzle {
   aliases: string[];
   style: Style;
   file: string; // relative to assets/
+  lux3dGenerated?: boolean;
 }
 
 export const SOLO_ROUND_MS = 45_000;
@@ -25,6 +26,11 @@ function load(): Puzzle[] {
   }
 }
 let puzzles = load();
+/** Prefer Lux3D-generated puzzles once at least 3 exist; otherwise use the bundled samples. */
+const pool = () => {
+  const lux = puzzles.filter((p) => p.lux3dGenerated);
+  return lux.length >= 3 ? lux : puzzles;
+};
 export const reloadPuzzles = () => (puzzles = load());
 
 const EPOCH = Date.UTC(2026, 10, 1); // Daily Mesh #1 = 2026-11-01
@@ -44,12 +50,13 @@ const toPublic = (p: Puzzle, i: number): DailyPuzzle => ({
 export function todaysPuzzles(): { number: number; puzzles: DailyPuzzle[] } {
   const n = dailyNumber();
   const out: DailyPuzzle[] = [];
-  for (let i = 0; i < Math.min(3, puzzles.length); i++) out.push(toPublic(puzzles[(n * 3 + i) % puzzles.length], i + 1));
+  const ps = pool();
+  for (let i = 0; i < Math.min(3, ps.length); i++) out.push(toPublic(ps[(n * 3 + i) % ps.length], i + 1));
   return { number: n, puzzles: out };
 }
 
 export function soloPuzzles(count = 5): DailyPuzzle[] {
-  const shuffled = [...puzzles].sort(() => Math.random() - 0.5).slice(0, count);
+  const shuffled = [...pool()].sort(() => Math.random() - 0.5).slice(0, count);
   return shuffled.map((p, i) => toPublic(p, i + 1));
 }
 
